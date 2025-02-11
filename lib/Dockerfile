@@ -1,12 +1,18 @@
 FROM node:20-alpine
 
-RUN git clone https://github.com/ruemods/hmmm /sparky/xbotmd
+RUN apk update && apk add --no-cache git ffmpeg
+
 WORKDIR /sparky/xbotmd
-RUN apk update && \
-    apk add --no-cache git ffmpeg
-COPY package.json .
+
+RUN git clone https://github.com/ruemods/hmmm . 
+
+RUN git config --global --add safe.directory /sparky/xbotmd
+
+COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
-COPY . .
+
+COPY . . 
+
 EXPOSE 8080
 
 CMD ["npm", "start"]
