@@ -1,4 +1,4 @@
-const {Spakry} = require('../lib');
+const {Sparky} = require('../lib');
 const simpleGit = require('simple-git');
 const git = simpleGit();
 
