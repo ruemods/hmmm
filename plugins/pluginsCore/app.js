@@ -1,5 +1,6 @@
 const config = require('../../config');
 const {default: axios} = require('axios');
+const pm2 = require('pm2');
 const PLATFORM = process.env.PWD?.includes("userland") ? "LINUX" : process.env.PITCHER_API_BASE_URL?.includes("codesandbox") ? "CODESANDBOX" : process.env.REPLIT_USER ? "REPLIT" : process.env.AWS_REGION ? "AWS" : process.env.TERMUX_VERSION ? "TERMUX" : process.env.DYNO ? "HEROKU" : process.env.KOYEB_APP_ID ? "KOYEB" : process.env.GITHUB_SERVER_URL ? "GITHUB" : process.env.RENDER ? "RENDER" : process.env.RAILWAY_SERVICE_NAME ? "RAILWAY" : process.env.VERCEL ? "VERCEL" : process.env.DIGITALOCEAN_APP_NAME ? "DIGITALOCEAN" : process.env.AZURE_HTTP_FUNCTIONS ? "AZURE" : process.env.NETLIFY ? "NETLIFY" : process.env.FLY_IO ? "FLY_IO" : process.env.CF_PAGES ? "CLOUDFLARE" : process.env.SPACE_ID ? "HUGGINGFACE" : "VPS";
 const koyeb = axios.create({baseURL: 'https://app.koyeb.com/v1', headers: {'Content-Type': 'application/json;charset=UTF-8', Authorization: `Bearer ${config.KOYEB_API_KEY}`}});
 const render = axios.create({baseURL: 'https://api.render.com/v1', headers: {Authorization: `Bearer ${config.RENDER_API_KEY}`}});
@@ -34,6 +35,28 @@ async function updateApp(option) {
 	if(PLATFORM) {
 		switch (PLATFORM) {
 			case 'KOYEB': {
+				const app = await getAppData();
+			try {
+			await message.reply('_Updating..._');
+			let intervalId;
+				intervalId = setInterval(async function () {
+				const {deployments} = await koyeb.get(`/deployments?service_id/${app.id}`)
+				if (deployments[0].status == 'CANCELED') {
+						await message.send('*Deployment Canceled*');
+						clearInterval(intervalId);
+					} else if (deployments[0].status == 'STOPPED') {
+						await message.send('*Deployment Stopped*');
+						clearInterval(intervalId);
+					} else if (deployments[0].status == 'STARTING') {
+						await message.send('_Successfully Updated! Restarting..._');
+						clearInterval(intervalId);
+						await pm2.stop('X-BOT-MD');
+					}
+}, 5000)
+return await koyeb.post(`/services/${app.id}/redeploy`, { deployment_group: 'prod'})
+			} catch (e) {
+			return await message.reply('_Build failed!_\n' + "```" + e.message + "```");
+			}
 				break;
 			}
 			case 'RENDER': {
