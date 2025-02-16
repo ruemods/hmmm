@@ -20,7 +20,7 @@ var commits = await git.log([
 let message = "*_New updates available!_*\n\n";
 commits["all"].map((e, i) =>
 message += "```" + `${i + 1}. ${e.message}\n[${e.date.substring(0, 10)}]\n` + "```")
-return await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
+await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
         if(args && (args.toLowerCase() === 'now')) {
               await git.fetch();
               const branches = await git.branch(['-r']);
