@@ -30,7 +30,7 @@ async function getAppData() {
 }
 
 
-async function updateApp(option) {
+async function updateApp(message, option) {
 	option = option ? option : '';
 	if(PLATFORM) {
 		switch (PLATFORM) {
