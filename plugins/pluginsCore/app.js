@@ -155,4 +155,4 @@ async function getVars() {
 }
 
 
-module.exports = {PLATFORM, updateApp, setVar, delVar, getVars};
+module.exports = {PLATFORM, getAppData, updateApp, setVar, delVar, getVars};
