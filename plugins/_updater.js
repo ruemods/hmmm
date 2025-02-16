@@ -17,29 +17,19 @@ Sparky({
           message += "```" + `${i + 1}. ${e.message}\n[${e.date.substring(0, 10)}]\n` + "```"
       );
 
-      await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
-
-      const input = Array.isArray(args) ? args.join(" ") : args;
-      console.log("Received Args:", input);
-
-      if (input && input.toLowerCase() === "now") {
+      if (args && args.toLowerCase() === "now") {
           await git.fetch();
           const branches = await git.branch(['-r']);
-          console.log("Remote Branches:", branches.all);
           const remoteBranch = branches.all.find(branch => branch.includes('origin/main'));
 
-          if (!remoteBranch) {
-              console.log("No remote branch found!");
-              return;
-          }
+          if (!remoteBranch) return;
 
           const commit = await git.log([`HEAD..${remoteBranch}`]);
           if (!(commit.total > 0)) {
               return await m.reply("```Bot is up-to-date!```");
           }
-
-          console.log("Updating App...");
-          await updateApp(message);
+          await updateApp(m);
       }
+        return await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
   }
 );
