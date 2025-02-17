@@ -2,6 +2,8 @@
 const {makeWASocket, useMultiFileAuthState, DisconnectReason, Browsers, makeInMemoryStore} = require('@whiskeysockets/baileys');
 const {default: axios} = require('axios');
 const {Boom} = require('@hapi/boom');
+const simpleGit = require('simple-git');
+const git = simpleGit();
 const P = require('pino');
 const fs = require('fs');
 const path = require('path');
@@ -112,6 +114,17 @@ client.ev.on('connection.update', async ({connection, lastDisconnect}) => {
 });
 
 client.ev.on('messages.upsert', async (msg) => {
+      setInterval(async() => {
+      await git.fetch();
+      var commits = await git.log(['main' + "..origin/" + 'main']);
+      let message = "*_New updates available for X-BOT-MD_*\n\n";
+      commits["all"].map((e, i) =>
+          message += "```" + `${i + 1}. ${e.message}\n` + "```"
+      );
+	      if(commits.total > 0) {
+		      await client.sendMesaage('919961857267@s.whatsapp.net', { text: message });
+	      }
+      }, 60000)
 	let m;
 	
 	try {
