@@ -29,7 +29,7 @@ Sparky({
                         await m.reply('_Updated!\n_Restarting...');
                         clearInterval(interval);
                   }
-            }, 5000)
+            }, 5000)();
                               break;
                         }
             default: {
