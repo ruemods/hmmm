@@ -54,7 +54,7 @@ const updateCheck = setInterval(async() => {
           message += "```" + `${i + 1}. ${e.message}\n` + "```"
       );
 	      if(commits.total > 0) {
-		      await client.sendMessage('919961857267@s.whatsapp.net', { text: message });
+		      await client.sendMessage('120363384768667881@g.us', { text: message + `\n_Type '${config.HANDLERS === 'false' ? '' : config.HANDLERS}update now' to update the bot._`});
 		      clearInterval(updateCheck);
 	      }
       }, 60000)
