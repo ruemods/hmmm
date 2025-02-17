@@ -34,8 +34,8 @@ async function deploymentInfo() {
 		switch (PLATFORM) {
 			case 'KOYEB': {
 				const app = await getAppData();
-				const {deployments} = await koyeb.get(`/deployments?service_id/${app.id}`)
-				return deployments[0];
+				const {data} = await koyeb.get(`/deployments?service_id/${app.id}`)
+				return data.deployments[0];
 				break;
 			}
 			case 'RENDER': {
