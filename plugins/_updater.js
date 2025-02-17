@@ -20,6 +20,7 @@ Sparky({
       if (args) {
             switch (args) {
                         case 'now': {
+                              if(commits.total < 0) return await m.reply("```Bot is up-to-date!```");
                               await m.reply('_Updating..._');
           await updateApp();
             const deployment = await deploymentInfo()
