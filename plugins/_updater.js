@@ -20,14 +20,13 @@ Sparky({
       if (args) {
             switch (args) {
                         case 'now': {
-                              if(commits.total < 0) return await m.reply("```Bot is up-to-date!```");
-                              await m.reply('_Updating..._');
+                              if(commits.total === 0) return await m.reply("```Bot is up-to-date!```");
+                              await m.reply('_*Updating...*_');
           await updateApp();
             const interval = setInterval(async () => {
                   const deployment = await deploymentInfo()
-                  console.log(deployment.status);
                   if(deployment.status === 'STARTING') {
-                        await m.reply('_Updated!\n_Restarting...');
+                        await m.reply("_*Bot updated!*_\n_Restarting..._");
                         clearInterval(interval);
                   }
             }, 5000)
