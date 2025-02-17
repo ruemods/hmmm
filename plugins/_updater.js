@@ -17,17 +17,10 @@ Sparky({
           message += "```" + `${i + 1}. ${e.message}\n[${e.date.substring(0, 10)}]\n` + "```"
       );
 
-      if (args && args.toLowerCase() === "now") {
-          await git.fetch();
-          const branches = await git.branch(['-r']);
-          const remoteBranch = branches.all.find(branch => branch.includes('origin/main'));
-
-          if (!remoteBranch) return;
-
-          const commit = await git.log([`HEAD..${remoteBranch}`]);
-          if (!(commit.total > 0)) {
-              return await m.reply("```Bot is up-to-date!```");
-          }
+      if (args) {
+            switch (args) {
+                        case 'now': {
+                              await.reply('_Updating..._');
           await updateApp();
             const deployment = await deploymentInfo()
             const interval = setInterval(async () => {
@@ -36,6 +29,13 @@ Sparky({
                         clearInterval(interval);
                   }
             }, 5000)
+                              break;
+                        }
+            default: {
+                  
+            }
+            }
+            return;
       }
         return await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
   }
