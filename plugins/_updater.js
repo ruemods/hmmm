@@ -24,6 +24,7 @@ Sparky({
           await updateApp();
             const deployment = await deploymentInfo()
             const interval = setInterval(async () => {
+                  console.log(deployment.status);
                   if(deployment.status === 'STARTING') {
                         await m.reply('_Updated!\n_Restarting...');
                         clearInterval(interval);
