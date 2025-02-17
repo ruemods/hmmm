@@ -1,5 +1,5 @@
 const {Sparky} = require('../lib');
-const {updateApp} = require('./pluginsCore');
+const {updateApp,deploymentInfo} = require('./pluginsCore/app');
 const simpleGit = require('simple-git');
 const git = simpleGit();
 
@@ -28,7 +28,14 @@ Sparky({
           if (!(commit.total > 0)) {
               return await m.reply("```Bot is up-to-date!```");
           }
-          await updateApp(m);
+          await updateApp();
+            const deployment = await deploymentInfo()
+            const interval = setInterval(async () => {
+                  if(deployment.status === 'STARTING') {
+                        await m.reply('_Updated!\n_Restarting...');
+                        clearInterval(interval);
+                  }
+            }, 5000)
       }
         return await m.reply(commits.total !== 0 ? message + `\n_Use '${m.prefix}update now' to update the bot._` : "```Bot is up-to-date!```");
   }
