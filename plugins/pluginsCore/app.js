@@ -29,33 +29,35 @@ async function getAppData() {
 	}
 }
 
+async function deploymentInfo() {
+	if(PLATFORM) {
+		switch (PLATFORM) {
+			case 'KOYEB': {
+				const app = await getAppData();
+				const {deployments} = await koyeb.get(`/deployments?service_id/${app.id}`)
+				return deployments[0];
+				break;
+			}
+			case 'RENDER': {
+			}
+			default: {
+				console.log("Unsupported platform.", PLATFORM);
+			}
+		}
+		return;
+	}
+}
 
-async function updateApp(message, option) {
+async function updateApp(option) {
 	option = option ? option : '';
 	if(PLATFORM) {
 		switch (PLATFORM) {
 			case 'KOYEB': {
 				const app = await getAppData();
 			try {
-			await message.reply('_Updating..._');
-			let intervalId;
-				intervalId = setInterval(async function () {
-				const {deployments} = await koyeb.get(`/deployments?service_id/${app.id}`)
-				if (deployments[0].status == 'CANCELED') {
-						await message.send('*Deployment Canceled*');
-						clearInterval(intervalId);
-					} else if (deployments[0].status == 'STOPPED') {
-						await message.send('*Deployment Stopped*');
-						clearInterval(intervalId);
-					} else if (deployments[0].status == 'STARTING') {
-						await message.send('_Successfully Updated! Restarting..._');
-						clearInterval(intervalId);
-						await pm2.stop('X-BOT-MD');
-					}
-}, 5000)
-return await koyeb.post(`/services/${app.id}/redeploy`, { deployment_group: 'prod'})
+			return await koyeb.post(`/services/${app.id}/redeploy`, { deployment_group: 'prod'})
 			} catch (e) {
-			return await message.reply('_Build failed!_\n' + "```" + e.message + "```");
+			console.log('Build failed!' +  e.message);
 			}
 				break;
 			}
@@ -178,4 +180,4 @@ async function getVars() {
 }
 
 
-module.exports = {PLATFORM, getAppData, updateApp, setVar, delVar, getVars};
+module.exports = {PLATFORM,deploymentInfo, getAppData, updateApp, setVar, delVar, getVars};
