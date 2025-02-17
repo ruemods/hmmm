@@ -20,7 +20,7 @@ Sparky({
       if (args) {
             switch (args) {
                         case 'now': {
-                              await.reply('_Updating..._');
+                              await m.reply('_Updating..._');
           await updateApp();
             const deployment = await deploymentInfo()
             const interval = setInterval(async () => {
