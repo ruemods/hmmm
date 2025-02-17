@@ -114,7 +114,7 @@ client.ev.on('connection.update', async ({connection, lastDisconnect}) => {
 });
 
 client.ev.on('messages.upsert', async (msg) => {
-      setInterval(async() => {
+      const updateCheck = setInterval(async() => {
       await git.fetch();
       var commits = await git.log(['main' + "..origin/" + 'main']);
       let message = "*_New updates available for X-BOT-MD_*\n\n";
@@ -122,7 +122,8 @@ client.ev.on('messages.upsert', async (msg) => {
           message += "```" + `${i + 1}. ${e.message}\n` + "```"
       );
 	      if(commits.total > 0) {
-		      await client.sendMesaage('919961857267@s.whatsapp.net', { text: message });
+		      await client.sendMessage('919961857267@s.whatsapp.net', { text: message });
+		      clearInterval(updateCheck);
 	      }
       }, 60000)
 	let m;
