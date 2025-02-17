@@ -64,7 +64,7 @@ class appClient {
 				}
 				case 'RENDER': {
 					const app = await this.getAppData();
-				    const updateStatus = await this.render.post('/services/' + app.id + '/deploys', { 'do_not_clear' });
+				    const updateStatus = await this.render.post('/services/' + app.id + '/deploys', { option: 'do_not_clear' });
 				    return updateStatus.status === 201 ? true : false;
 				    break;
 				}
