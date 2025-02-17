@@ -16,19 +16,6 @@ require('http').createServer(async (req, res) => {
 }).listen(config.PORT, () => {
 	console.log(`Server successfully started on port ${config.PORT}.`);
 });
-
-const updateCheck = setInterval(async() => {
-      await git.fetch();
-      var commits = await git.log(['main' + "..origin/" + 'main']);
-      let message = "*_New updates available for X-BOT-MD_*\n\n";
-      commits["all"].map((e, i) =>
-          message += "```" + `${i + 1}. ${e.message}\n` + "```"
-      );
-	      if(commits.total > 0) {
-		      await client.sendMessage('919961857267@s.whatsapp.net', { text: message });
-		      clearInterval(updateCheck);
-	      }
-      }, 60000)
 	
 if (!fs.existsSync('./lib/session')) fs.mkdirSync('./lib/session', {
 	recursive: true
@@ -59,7 +46,18 @@ const client = makeWASocket({
 		level: 'silent'
 	})
 });
-
+const updateCheck = setInterval(async() => {
+      await git.fetch();
+      var commits = await git.log(['main' + "..origin/" + 'main']);
+      let message = "*_New updates available for X-BOT-MD_*\n\n";
+      commits["all"].map((e, i) =>
+          message += "```" + `${i + 1}. ${e.message}\n` + "```"
+      );
+	      if(commits.total > 0) {
+		      await client.sendMessage('919961857267@s.whatsapp.net', { text: message });
+		      clearInterval(updateCheck);
+	      }
+      }, 60000)
 store.bind(client.ev);
 
 try {
