@@ -156,7 +156,7 @@ class appClient {
 			switch (this.platform) {
 				case 'KOYEB': {
 				 	const app = await this.getAppData();
-				    const fetchDeploymentData = await this koyeb.get('/deployments/' + app.latest_deployment_id);
+				    const fetchDeploymentData = await this.koyeb.get('/deployments/' + app.latest_deployment_id);
 				    const varsArray = fetchDeploymentData.data.deployment.definition.env.map(item => ({ key: item.key, value: item.value }));
 				    return varsArray ? varsArray : false;
 			    	break;
