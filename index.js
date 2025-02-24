@@ -47,7 +47,7 @@ const client = makeWASocket({
 	})
 });
 
-const sudoId = (config.SUDO !== '' ? config.SUDO.split(',')[0] : client.user.id.split(':')[0]) + "@s.whatsapp.net";
+const sudoIde = (config.SUDO !== '' ? config.SUDO.split(',')[0] : client.user.id.split(':')[0]) + "@s.whatsapp.net";
 const updateCheck = setInterval(async() => {
       await git.fetch();
       var commits = await git.log(['main' + "..origin/" + 'main']);
@@ -56,7 +56,7 @@ const updateCheck = setInterval(async() => {
           message += "```" + `${i + 1}. ${e.message}\n` + "```"
       );
 	      if(commits.total > 0) {
-		      await client.sendMessage(sudoId, { text: message + `\n_Type '${config.HANDLERS === 'false' ? '' : config.HANDLERS}update now' to update the bot._`});
+		      await client.sendMessage(sudoIde, { text: message + `\n_Type '${config.HANDLERS === 'false' ? '' : config.HANDLERS}update now' to update the bot._`});
 		      clearInterval(updateCheck);
 	      }
       }, 60000)
@@ -95,6 +95,7 @@ client.ev.on('connection.update', async ({connection, lastDisconnect}) => {
 		console.log('Connected.');
 		fs.readdirSync('./plugins').filter(file => path.extname(file) === '.js').forEach(file => require(`./plugins/${file}`));
 	        var startupMessage = `*X BOT MD STARTED!*\n\n_Mode: ${config.WORK_TYPE}_\n_Prefix: ${config.HANDLERS}_\n_Version: ${config.VERSION}_\n_Menu Type: ${config.MENU_TYPE}_\n_Language: ${config.LANGUAGE}_\n\n*Extra Configurations*\n\n\`\`\`Always online: ${config.ALWAYS_ONLINE ? '✅' : '❌'}\nAuto status view: ${config.AUTO_STATUS_VIEW ? '✅' : '❌'}\nAuto reject calls: ${config.REJECT_CALLS ? '✅' : '❌'}\nAuto read messages: ${config.READ_MESSAGES ? '✅' : '❌'}\nAuto call blocker: ${config.CALL_BLOCK ? '✅' : '❌'}\nAuto status save: ${config.SAVE_STATUS ? '✅' : '❌'}\nAuto status reply: ${config.STATUS_REPLY ? '✅' : '❌'}\nAuto status reaction: ${config.STATUS_REACTION ? '✅' : '❌'}\nLogs: ${config.LOGS ? '✅' : '❌'}\nPM Blocker: ${config.PM_BLOCK ? '✅' : '❌'}\nPM Disabler: ${config.DISABLE_PM ? '✅' : '❌'}\`\`\``;
+			var sudoId = (config.SUDO !== '' ? config.SUDO.split(',')[0] : client.user.id.split(':')[0]) + "@s.whatsapp.net";
 		if (config.START_MSG) {
 			return await client.sendMessage(sudoId, {
 				text: startupMessage,
