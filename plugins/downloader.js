@@ -110,16 +110,12 @@ async ({
     try {
         let match = args || m.quoted?.text;
         if (!match) return await m.reply(lang.NEED_Q);
-        if (isUrl(match)) {
-            let url = (await extractUrlsFromText(match));
+            await m.react('🔎');
+            const { result } = await getJson(config.API + "/api/search/xnxx?search=" + match);
             await m.react('⬇️');
-            const { result } = await getJson(AP + "download/xnxx?url=" + url);
-            await m.sendFromUrl(result.files.high, { caption: "👅💦" });
-        } else {
-            let url = await getJson(AP + "search/xnxx?q=" + match);
-            const { result } = await getJson(AP + "download/xnxx?url=" + url.result[0].link);
-            await m.sendFromUrl(result.files.high, { caption: "👅💦" });
-        }
+            var xnxx = x.result.result[0].link
+            const xdl = await getJson(`${config.API}/api/downloader/xnxx?url=${xnxx}`)
+            await m.sendFromUrl(xdl.data.files.high, { caption: xdl.data.title });
         await m.react('✅');
     } catch (error) {
         await m.react('❌');
