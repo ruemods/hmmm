@@ -90,7 +90,7 @@ async ({
 await m.react('🔎');
 const play = (await yts(args))[0]
 await m.react('⬇️');
-      await m.reply(Downloading ${play.title})
+      await m.reply(`Downloading ${play.title}`)
 const url = await yta(play.url);
 const songbuff = await (await fetch(url)).buffer();
 await client.sendMessage(m.jid , {audio : songbuff,  mimetype : 'audio/mpeg'} , { quoted : m })
