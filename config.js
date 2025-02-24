@@ -44,7 +44,7 @@ module.exports = {
 	ALIVE: process.env.ALIVE || "Hello i'm alive",
 	ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "false"),
 	BGMBOT : toBool(process.env.BGMBOT || "true"),
-	API: "https://api.devstackx.in",
+	API: "https://api-aswin-sparky.koyeb.app",
 	AUDIO_DATA: process.env.AUDIO_DATA || "X BOT MD;ASWIN SPARKY;https://i.ibb.co/88TXFkJ/645cfc6eb7e1.jpg",
 	AUTO_STATUS_VIEW: toBool(process.env.AUTO_STATUS_VIEW || "true"),
 	BOT_INFO: process.env.BOT_INFO || "X-BOT-MD;ASWIN SPARKY;https://i.imgur.com/r3GZeiX.jpeg",

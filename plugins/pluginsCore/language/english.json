@@ -12,6 +12,7 @@
         },
         "download": {
             "DOWNLOADING": "_Downloading.._",
+            "NOT_URL": "_Not a url_",
             "WAIT": "_Please Wait.._",
             "NEED_URL": "_Need a URL!_",
             "INVALID_URL": "_Invalid url!_",

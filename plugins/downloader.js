@@ -18,13 +18,14 @@ Sparky(
     }) => {
         args = args || m.quoted?.text;
         if (!args) return await m.reply(lang.NEED_URL);
+        if (isUrl(args)) return await m.reply(lang.NOT_URL);
         let dl = await client.sendMessage(m.jid, {
             text: lang.DOWNLOADING
         }, {
             quoted: m
         })
         try {
-            let response = await getJson(config.API + "/v1/igdl?url=" + args);
+            let response = await getJson(config.API + "/api/downloader/igdl?url=" + args);
             for (let i of response.data) {
                 await m.sendMsg(m.jid, i.url, { quoted: m }, i.type)
             }
