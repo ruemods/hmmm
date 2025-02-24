@@ -74,3 +74,29 @@ async ({
       m.reply(error);
   }
 });
+
+Sparky({
+  name: "play",
+  fromMe: isPublic,
+  category: "youtube",
+  desc: "play a song"
+},
+async ({
+  m, client, args
+}) => {
+  try {
+      args = args || m.quoted?.text;
+      if(!args) return await m.reply(lang.NEED_Q);
+await m.react('🔎');
+const play = (await yts(args))[0]
+await m.react('⬇️');
+      await m.reply(Downloading ${play.title})
+const url = await yta(play.url);
+const songbuff = await (await fetch(url)).buffer();
+await client.sendMessage(m.jid , {audio : songbuff,  mimetype : 'audio/mpeg'} , { quoted : m })
+ await m.react('✅');     
+  } catch (error) {
+      await m.react('❌');
+      m.reply(error);
+  }
+});
