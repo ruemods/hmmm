@@ -141,8 +141,8 @@ async ({
         let match = args || m.quoted?.text;
         if (!match) return await m.reply(lang.NEED_URL);
         await m.react('⬇️');
-        const { data } = await getJson(AP + "download/terabox?url=" + match);
-        await m.sendFromUrl(data.result.downloadUrl, { caption: data.result.filename });
+        const { data } = await getJson(config.API + "/api/downloader/terrabox?url=" + match);
+        await m.sendFromUrl(data.dlink, { caption: data.filename });
         await m.react('✅');
     } catch (error) {
         await m.react('❌');
