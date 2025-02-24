@@ -18,7 +18,7 @@ Sparky(
     }) => {
         args = args || m.quoted?.text;
         if (!args) return await m.reply(lang.NEED_URL);
-        if (isUrl(args)) return await m.reply(lang.NOT_URL);
+        //if (isUrl(args)) return await m.reply(lang.NOT_URL);
         let dl = await client.sendMessage(m.jid, {
             text: lang.DOWNLOADING
         }, {
