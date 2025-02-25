@@ -23,7 +23,7 @@
             "RESTART_DESC": "Restarts the app.",
             "RESTARTING": "_Restarting..._",
             "SETVAR_DESC": "Set or update environment variables.",
-            "SETVAR_ALERT": "_Key and value are needed!_\n_Eg: {}setvar WORK_TYPE:private_",
+            "SETVAR_ALERT": "_Key and value are needed!_\n_Eg: {}setvar WORK_TYPE=private_",
             "SETVAR_SUCCESS": "_Successfully added env var {}: {}_",
             "SETVAR_FAILED": "_Failed to add env var!_",
             "DELVAR_DESC": "Delete environment variables.",
