@@ -79,7 +79,7 @@ Sparky({
 		args
 	}) => {
 		if (!args) return await m.reply(lang.SETVAR_ALERT.replace("{}", m.prefix));
-		const [key, value] = args.split(":");
+		const [key, value] = args.split("=");
 		const setVariable = await app.setVar(key.trim().toUpperCase(), value.trim());
 		return await m.reply(setVariable ? lang.SETVAR_SUCCESS.replace("{}", key.trim().toUpperCase()).replace("{}", value.trim()) : lang.SETVAR_FAILED);
 	});
