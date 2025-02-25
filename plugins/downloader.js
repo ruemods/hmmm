@@ -113,7 +113,7 @@ async ({
             await m.react('🔎');
             const { result } = await getJson(config.API + "/api/search/xnxx?search=" + match);
             await m.react('⬇️');
-            var xnxx = x.result.result[0].link
+            var xnxx = result.result[0].link
             const xdl = await getJson(`${config.API}/api/downloader/xnxx?url=${xnxx}`)
             await m.sendFromUrl(xdl.data.files.high, { caption: xdl.data.title });
         await m.react('✅');
