@@ -70,7 +70,7 @@ module.exports = {
 	REJECT_CALL_MSG: process.env.REJECT_CALL_MSG || "_Calls are not allowed. Please don’t call again!._",
 	SESSION_ID: process.env.SESSION_ID || "",
 	START_MSG: toBool(process.env.START_MSG || "true"),
-	STICKER_DATA: process.env.STICKER_DATA || "X BOT MD;ASWIN SPARKY",
+	STICKER_DATA: process.env.STICKER_DATA || `X BOT MD;ASWIN SPARKY`,
 	SUDO: process.env.SUDO || "917012984396,917511107276,919961857267,919656459062",
 	WORK_TYPE: process.env.WORK_TYPE || "public",
 	SAVE_STATUS: toBool(process.env.SAVE_STATUS || "false"),
