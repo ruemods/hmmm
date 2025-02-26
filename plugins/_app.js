@@ -177,25 +177,25 @@ Sparky({
 Sparky({
     on: "text",
     fromMe: true,
-}, async ({ client, m }) => {
-    if (m.quoted?.text.includes("Settings Configuration Menu")) {
-        const selected = settingsMenu[parseInt(m.text) - 1];
-        if (!selected) return;
-
-        const currentStatus = config[selected.env_var] ? "on" : "off";
-        const statusOptions = ["on", "off"].map((s, i) => `_${i + 1}. ${s}_`).join("\n");
-        
-        await m.reply(`*_${selected.title}_*\n\n_Current status: ${currentStatus}_\n\n_Reply with a number to update the status._\n\n${statusOptions}`);
-        settingsContext = { sender: m.sender, title: selected.title, env_var: selected.env_var };
+  }, async ({ client, m }) => {
+    if (m.quoted && typeof m.quoted.text === "string" && m.quoted.text.includes("Settings Configuration Menu")) {
+      const selected = settingsMenu[parseInt(m.text) - 1];
+      if (!selected) return;
+  
+      const currentStatus = config[selected.env_var] ? "on" : "off";
+      const statusOptions = ["on", "off"].map((s, i) => `_${i + 1}. ${s}_`).join("\n");
+  
+      await m.reply(`*_${selected.title}_*\n\n_Current status: ${currentStatus}_\n\n_Reply with a number to update the status._\n\n${statusOptions}`);
+      settingsContext = { sender: m.sender, title: selected.title, env_var: selected.env_var };
     }
-
-    if (settingsContext.sender === m.sender && m.quoted?.text.includes(settingsContext.title)) {
-        const status = ["on", "off"][parseInt(m.text) - 1];
-        if (!status) return;
-
-        await app.setVar(settingsContext.env_var, status === "on" ? "true" : "false");
-        delete settingsContext;
-        
-        return await m.reply(`_${settingsContext.title} ${status === "on" ? "enabled." : "disabled."}_`);
+  
+    if (settingsContext.sender === m.sender && m.quoted && typeof m.quoted.text === "string" && m.quoted.text.includes(settingsContext.title)) {
+      const status = ["on", "off"][parseInt(m.text) - 1];
+      if (!status) return;
+  
+      await app.setVar(settingsContext.env_var, status === "on" ? "true" : "false");
+      delete settingsContext;
+  
+      return await m.reply(`_${settingsContext.title} ${status === "on" ? "enabled." : "disabled."}_`);
     }
-});
+  });
