@@ -1,7 +1,29 @@
-const {Sparky, isPublic} = require("../lib");
+const {Sparky, isPublic,uploadMedia,handleMediaUpload} = require("../lib");
 const {getString, appendMp3Data} = require('./pluginsCore');
 const config = require('../config.js');
 const lang = getString('converters');
+
+
+Sparky({
+    name: "url",
+    fromMe: true,
+    desc: "manage",
+    category: "manage",
+  }, async ({ args, m }) => {
+    if (!m.quoted) {
+      return m.reply('Reply to an Image/Video/Audio');
+    }
+    try {
+        await m.react('⏫');
+      const mediaBuffer = await m.quoted.download();
+      const mediaUrl = await handleMediaUpload(mediaBuffer);
+      await m.react('✅');
+      m.reply(mediaUrl);
+    } catch (error) {
+        await m.react('❌');
+      m.reply('An error occurred while uploading the media.');
+    }
+  });
 
 Sparky({
 		name: "sticker",
